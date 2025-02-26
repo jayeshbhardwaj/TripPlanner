@@ -53,9 +53,23 @@ This will start both the frontend server (port 3000) and the backend server (por
 4. Click "Generate Itinerary"
 5. View your personalized travel plan!
 
+## Testing
+The project includes a comprehensive test suite built with Jest and React Testing Library.
+
+### Running Tests
+- `npm test` - Run all tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Generate test coverage report
+
+### Test Coverage
+- Frontend Components: Testing UI rendering, user interactions, and state changes
+- API Services: Testing API calls and error handling
+- Backend Endpoints: Testing Express route handling and response formatting
+
 ## Built With
 - React with TypeScript
 - Express.js backend
 - Claude AI by Anthropic
 - Webpack
+- Jest and React Testing Library for testing
 

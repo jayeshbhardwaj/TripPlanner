@@ -25,13 +25,15 @@ app.post('/api/claude', async (req, res) => {
     }
 
     // Check if API key is set
-    if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'your_api_key_here') {
+    if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'your_api_key_here' || process.env.ANTHROPIC_API_KEY === 'your_anthropic_api_key_here') {
       console.log('Missing or invalid API key. Please set your ANTHROPIC_API_KEY in the .env file.');
       
       // For demo purposes, return mock data instead of failing
       const mockItinerary = generateMockItinerary(prompt);
       return res.json({ content: mockItinerary });
     }
+    
+    console.log('Using API key:', process.env.ANTHROPIC_API_KEY);
 
     // Make request to Claude API
     const response = await axios.post(
@@ -49,7 +51,7 @@ app.post('/api/claude', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'Authorization': `Bearer ${process.env.ANTHROPIC_API_KEY}`,
           'anthropic-version': '2023-06-01'
         }
       }
@@ -158,7 +160,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start server if this file is run directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export for testing
+module.exports = { app };
